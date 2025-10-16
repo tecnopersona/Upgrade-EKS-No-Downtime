@@ -17,7 +17,7 @@
 ---
 
 ## Descripcion
-Guía completa para actualizar un cluster de Amazon EKS de la versión 1.28 a la última versión disponible, manteniendo **zero downtime** y garantizando la estabilidad del entorno de producción . prueba rama 6
+Guía completa para actualizar un cluster de Amazon EKS de la versión 1.28 a la última versión disponible, manteniendo **zero downtime** y garantizando la estabilidad del entorno de producción.
 
 ⏰ **Frecuencia Recomendada:** Cada 3 meses (Kubernetes solo soporta las últimas 3 versiones)
 
