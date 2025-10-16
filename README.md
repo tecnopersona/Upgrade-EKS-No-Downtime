@@ -4,6 +4,7 @@
 - [Descripción](#descripción)
 - [Prerrequisitos](#prerrequisitos)
 - [Preparación](#preparación)
+- [Uso de kube-no-trouble](#uso-de-kube-no-trouble)
 - [Proceso de Actualización](#proceso-de-actualización)
 - [Post-Actualización](#post-actualización)
 - [Comandos de Emergencia](#comandos-de-emergencia)
@@ -75,6 +76,33 @@ velero backup describe pre-upgrade-backup-YYYYMMDD-HHMMSS
 - Actualización probada en staging
 - Período de prueba: 1-2 semanas
 - Validación de aplicaciones críticas
+
+---
+
+## 🧰 Uso de kube-no-trouble
+
+[kube-no-trouble](https://github.com/doitintl/kube-no-trouble) es una herramienta recomendada para detectar recursos y APIs obsoletas en tu cluster antes de la actualización. Esto ayuda a evitar problemas de compatibilidad y migrar recursos a versiones soportadas.
+
+### Instalación
+
+```bash
+# Instalar kube-no-trouble usando Homebrew
+brew install kube-no-trouble
+
+# O descargar binario desde GitHub
+curl -Lo knt https://github.com/doitintl/kube-no-trouble/releases/latest/download/knt_linux_amd64
+chmod +x knt
+sudo mv knt /usr/local/bin/
+```
+
+### Uso
+
+```bash
+# Analizar el cluster y mostrar recursos obsoletos
+knt --kube-context <context-name>
+```
+
+Revisa el reporte y actualiza los manifiestos YAML que utilicen APIs obsoletas antes de continuar con la actualización.
 
 ---
 
@@ -217,6 +245,7 @@ kubectl logs -n kube-system <problem-pod>
 ### Herramientas
 - [Velero Backup Tool](https://velero.io/)
 - [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+- [kube-no-trouble](https://github.com/doitintl/kube-no-trouble) <!-- agregado -->
 
 ### Monitoreo
 ```bash
