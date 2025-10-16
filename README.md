@@ -1,35 +1,35 @@
-# 🚀 Guía de Actualización de EKS sin Downtime
+# Guía de Actualización de EKS sin Downtime
 
-## 📋 Tabla de Contenidos
-- [Descripción](#descripción)
+## Tabla de Contenidos
+- [Descripcion](#descripcion)
 - [Prerrequisitos](#prerrequisitos)
-- [Preparación](#preparación)
+- [Preparacion](#preparacion)
 - [Uso de kube-no-trouble](#uso-de-kube-no-trouble)
-- [Proceso de Actualización](#proceso-de-actualización)
-- [Post-Actualización](#post-actualización)
+- [Proceso de Actualizacion](#proceso-de-actualizacion)
+- [Post-Actualizacion](#post-actualizacion)
 - [Comandos de Emergencia](#comandos-de-emergencia)
-- [Checklist](#checklist-final)
+- [Checklist Final](#checklist-final)
 - [Recursos Adicionales](#recursos-adicionales)
 
 ---
 
-## 📖 Descripción
+## Descripcion
 Guía completa para actualizar un cluster de Amazon EKS de la versión 1.28 a la última versión disponible, manteniendo **zero downtime** y garantizando la estabilidad del entorno de producción.
 
 ⏰ **Frecuencia Recomendada:** Cada 3 meses (Kubernetes solo soporta las últimas 3 versiones)
 
 ---
 
-## ✅ Prerrequisitos
+## Prerrequisitos
 
-### 🔧 Requisitos Técnicos
+### Requisitos Técnicos
 - Cluster EKS existente en versión 1.28
 - AWS CLI configurado con permisos adecuados
 - kubectl instalado y configurado
 - Velero instalado para backups
 - Acceso a la consola de AWS
 
-### 📊 Verificaciones Iniciales
+### Verificaciones Iniciales
 ```bash
 # Verificar estado actual del cluster
 kubectl get nodes
@@ -42,9 +42,9 @@ kubectl get pods -n kube-system
 
 ---
 
-## 🛠 Preparación (Días/Semanas Antes)
+## Preparacion (Dias/Semanas Antes)
 
-### 1. 📚 Investigación y Release Notes
+### 1. Investigación y Release Notes
 ```bash
 # Consultar versiones disponibles de EKS
 aws eks describe-addon-versions --kubernetes-version 1.28
@@ -56,7 +56,7 @@ kubectl api-resources --verbs=list -o name | xargs -n 1 kubectl get --show-kind 
 - [Release Notes EKS](https://docs.aws.amazon.com/eks/latest/userguide/release-notes.html)
 - [Kubernetes Release Notes](https://github.com/kubernetes/kubernetes/releases)
 
-### 2. 💾 Backup del Cluster
+### 2. Backup del Cluster
 ```bash
 # Backup completo con Velero
 velero backup create pre-upgrade-backup-$(date +%Y%m%d-%H%M%S) --include-namespaces="*" --wait
@@ -65,13 +65,13 @@ velero backup create pre-upgrade-backup-$(date +%Y%m%d-%H%M%S) --include-namespa
 velero backup describe pre-upgrade-backup-YYYYMMDD-HHMMSS
 ```
 
-### 3. 🔍 Verificación de Compatibilidad
+### 3. Verificación de Compatibilidad
 - Cluster Autoscaler compatible con nueva versión
 - Add-ons (kube-proxy, CoreDNS, VPC-CNI) compatibles
 - Al menos 5 IPs disponibles en subred
 - Recursos YAML usando APIs compatibles
 
-### 4. 🧪 Pruebas en Entornos Inferiores
+### 4. Pruebas en Entornos Inferiores
 - Actualización probada en desarrollo
 - Actualización probada en staging
 - Período de prueba: 1-2 semanas
@@ -79,7 +79,7 @@ velero backup describe pre-upgrade-backup-YYYYMMDD-HHMMSS
 
 ---
 
-## 🧰 Uso de kube-no-trouble
+## Uso de kube-no-trouble
 
 [kube-no-trouble](https://github.com/doitintl/kube-no-trouble) es una herramienta recomendada para detectar recursos y APIs obsoletas en tu cluster antes de la actualización. Esto ayuda a evitar problemas de compatibilidad y migrar recursos a versiones soportadas.
 
@@ -106,9 +106,9 @@ Revisa el reporte y actualiza los manifiestos YAML que utilicen APIs obsoletas a
 
 ---
 
-## ⚡ Proceso de Actualización
+## Proceso de Actualizacion
 
-### Fase 1: 📈 Actualizar Plano de Control (30 min)
+### Fase 1: Actualizar Plano de Control (30 min)
 ```bash
 # Iniciar actualización del plano de control
 aws eks update-cluster-version \
@@ -123,7 +123,7 @@ aws eks describe-update \
     --update-id <update-id>
 ```
 
-### Fase 2: 🖥 Actualizar Grupos de Nodos (30 min - 2 hrs)
+### Fase 2: Actualizar Grupos de Nodos (30 min - 2 hrs)
 
 **Para EKS Managed Node Groups:**
 ```bash
@@ -148,7 +148,7 @@ kubectl drain <node-name> \
 kubectl uncordon <new-node-name>
 ```
 
-### Fase 3: 🔌 Actualizar Add-ons
+### Fase 3: Actualizar Add-ons
 ```bash
 # Actualizar add-ons principales
 aws eks update-addon --cluster-name <cluster> --addon-name kube-proxy
@@ -158,7 +158,7 @@ aws eks update-addon --cluster-name <cluster> --addon-name vpc-cni
 
 ---
 
-## 🔍 Post-Actualización
+## Post-Actualizacion
 
 ### Verificación Inmediata
 ```bash
@@ -190,7 +190,7 @@ kubectl get deployments,services,ingress --all-namespaces
 
 ---
 
-## 🚨 Comandos de Emergencia
+## Comandos de Emergencia
 ```bash
 # Cancelar drenado problemático
 kubectl drain <node> --disable-eviction --force
@@ -208,7 +208,7 @@ kubectl logs -n kube-system <problem-pod>
 
 ---
 
-## ✅ Checklist Final
+## Checklist Final
 
 ### Pre-Actualización
 - Release notes revisadas y entendidas
@@ -235,7 +235,7 @@ kubectl logs -n kube-system <problem-pod>
 
 ---
 
-## 📚 Recursos Adicionales
+## Recursos Adicionales
 
 ### Documentación Oficial
 - [EKS Update Documentation](https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html)
