@@ -1,15 +1,18 @@
 # Guía de Actualización de EKS sin Downtime
 
 ## Tabla de Contenidos
-- [Descripcion](#descripcion)
-- [Prerrequisitos](#prerrequisitos)
-- [Preparacion](#preparacion)
-- [Uso de kube-no-trouble](#uso-de-kube-no-trouble)
-- [Proceso de Actualizacion](#proceso-de-actualizacion)
-- [Post-Actualizacion](#post-actualizacion)
-- [Comandos de Emergencia](#comandos-de-emergencia)
-- [Checklist Final](#checklist-final)
-- [Recursos Adicionales](#recursos-adicionales)
+
+| | |
+|:-:|---|
+| 🚀 | [Descripcion](#descripcion) |
+| ✅ | [Prerrequisitos](#prerrequisitos) |
+| 🛠 | [Preparacion](#preparacion) |
+| 🧰 | [Uso de kube-no-trouble](#uso-de-kube-no-trouble) |
+| ⚡ | [Proceso de Actualizacion](#proceso-de-actualizacion) |
+| 🔍 | [Post-Actualizacion](#post-actualizacion) |
+| 🚨 | [Comandos de Emergencia](#comandos-de-emergencia) |
+| ✅ | [Checklist Final](#checklist-final) |
+| 📚 | [Recursos Adicionales](#recursos-adicionales) |
 
 ---
 
