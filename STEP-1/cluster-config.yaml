@@ -1,0 +1,44 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: practice-cluster-20251017
+  region: us-east-1
+  version: "1.28"
+
+iam:
+  withOIDC: true
+
+addons:
+- name: vpc-cni
+- name: coredns
+- name: kube-proxy
+
+nodeGroups:
+  - name: ng-al2-problematic
+    instanceType: t3.medium
+    desiredCapacity: 3
+    minSize: 1
+    maxSize: 5
+    volumeSize: 20
+    labels:
+      os: amazon-linux-2
+    tags:
+      k8s.io/cluster-autosaster: owned
+    # Configuración problemática intencional
+    kubeletExtraConfig:
+      keepTerminatedPodVolumes: true
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        ebs: true
+
+  - name: ng-mixed-os
+    instanceType: t3.small
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 3
+    volumeSize: 20
+    labels:
+      os: mixed-problems
+    # Sin políticas de IAM para autoscaler
